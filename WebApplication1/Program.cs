@@ -15,20 +15,20 @@ builder.Services.AddScoped<ISqlSugarClient>(provider =>
     var db = new SqlSugarScope(new ConnectionConfig()
     {
         ConnectionString = connectionString,
-        DbType = DbType.MySql, // ¸ù¾İÄãµÄÊı¾İ¿âÀàĞÍµ÷Õû
+        DbType = DbType.MySql, 
         IsAutoCloseConnection = true,
     },
     db =>
     {
-        //// ÅäÖÃAOP
+        //// é…ç½®AOP
         //db.Aop.OnLogExecuting = (sql, pars) =>
         //{
-        //    Console.WriteLine(sql); // Êä³öSQL
+        //    Console.WriteLine(sql); // è¾“å‡ºSQL
         //};
     });
     return db;
 });
-// ÅäÖÃ Redis 
+// é…ç½® Redis 
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 {
     var configuration = ConfigurationOptions.Parse("localhost:6379", true);
@@ -37,7 +37,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "rabbitMQ ¶©µ¥²âÊÔ API", Version = "v1" });
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "rabbitMQ è®¢å•æµ‹è¯• API", Version = "v1" });
 });
 builder.Services.AddHostedService<RabbitMqListener>();
 builder.Services.AddScoped<IOrderConsumerService, OrderConsumerService>();
@@ -52,7 +52,7 @@ var app = builder.Build();
 
 app.UseAuthorization();
 
-// 6. ÅäÖÃÖĞ¼ä¼ş¹ÜµÀ
+// 6. é…ç½®ä¸­é—´ä»¶ç®¡é“
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
