@@ -84,17 +84,10 @@ namespace Order.Services
                 for (int j = 0; j < orderBatch.Count; j++)
                 {
                     var order = orderBatch[j];
-                    //var redisKey = $"order_lock:{order.OrderNo}";
-
-                    //if (_redis.Exists(redisKey))
-                    //{
-                    //    Console.WriteLine($"订单已处理：{order.OrderNo}");
-                    //    continue;
-                    //}
 
                     insertableOrders.Add(order);
                     insertableExtends.Add(extBatch[j]);
-                    //redisKeys.Add(redisKey);
+
                 }
 
                 if (!insertableOrders.Any()) continue;
@@ -111,11 +104,7 @@ namespace Order.Services
                 }
                 else
                 {
-                    // 插入成功后再设置 Redis 锁
-                    foreach (var key in redisKeys)
-                    {
-                        _redis.TryAcquireLock(key, TimeSpan.FromHours(1));
-                    }
+
 
                     Console.WriteLine($"成功插入一批数据，数量：{insertableOrders.Count}");
                 }
